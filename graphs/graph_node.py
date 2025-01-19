@@ -1,5 +1,5 @@
 class Node:
-    def __init__(self, id: int, sign: str):
+    def __init__(self, id: int, sign='flow'):
         self.sign = sign
         self.neighbors = []
         self.pressure = 0.

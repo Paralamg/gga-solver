@@ -1,3 +1,4 @@
+import math
 class Pipe:
     def __init__(self, input_node, output_node, length, diameter, roughness, molal_mass, temperature, T_crit, P_crit):
         # Получить исходые данные для расчёта
@@ -19,10 +20,12 @@ class Pipe:
         self.lamb = 0.067 * (2 * self.k / self.d) ** 0.2
 
     def get_pressure_losses(self, flow_rate: float):
-        pass
+        idem = self.get_idem()
+        return idem * flow_rate * abs(flow_rate)
 
     def get_pressure_derivatives(self, flow_rate: float):
-        pass
+        idem = self.get_idem()
+        return 2 * idem * abs(flow_rate)
 
 
     def get_idem(self):

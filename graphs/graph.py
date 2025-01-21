@@ -1,10 +1,20 @@
 import numpy as np
+from graphs.graph_node import Node
+from graphs.graph_arc import Arc
 
 
 class Graph:
     def __init__(self):
         self.nodes = []
         self.arcs = []
+
+    def add_node(self, node: Node):
+        self.nodes.append(node)
+
+    def add_arc(self, start: Node, end: Node, model):
+        
+        arc = Arc(start, end, model)
+        self.arcs.append(arc)
 
     def get_incidence_matrix(self) -> np.array:
         m = self.get_m()

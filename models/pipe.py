@@ -1,17 +1,16 @@
 import math
 class Pipe:
-    def __init__(self, input_node, output_node, length, diameter, roughness, molal_mass, temperature, T_crit, P_crit):
+    def __init__(self, id: int, length: float, diameter: float, roughness: float):
         # Получить исходые данные для расчёта
         self.l = length
         self.d = diameter
-        self.mu = molal_mass
         self.k = roughness
-        self.t = temperature
-        self.input_node = input_node
-        self.output_node = output_node
+        self.id = id
+        self.mu = 17.5
+        self.t = 290
         self.p_sto = 101325
-        self.t_crit = T_crit
-        self.p_crit = P_crit
+        self.t_crit = 200
+        self.p_crit = 4.75 * 10 ** 6
 
         # Расчитать постоянные заначения
         self.gas_const = 8314 / self.mu
@@ -34,7 +33,7 @@ class Pipe:
         '''
         return 16 * self.lamb * self.get_z_sto() * self.gas_const * self.t * self.l / (math.pi ** 2 * self.d ** 5)
 
-    def set_pressure(self, h_pressure, l_pressure):
+    def set_pressure(self, h_pressure: float, l_pressure: float):
         '''
         Находит среднее значение давления на учатске трубопровода по формуле приведённой в СТО Газпром 202-3.5-051-2006
         h_pressure - давление на входе

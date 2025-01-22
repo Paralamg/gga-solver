@@ -1,7 +1,7 @@
 from unittest import TestCase
 import factories.graph_factory as graph_factory
 from solvers.gga_solver import GGASolver
-from graphs.graph import Graph
+
 
 
 class TestGGASolver(TestCase):

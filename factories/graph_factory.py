@@ -8,7 +8,7 @@ def create_graph_with_three_pipes() -> Graph:
     supplier = Node(0, 'pressure', pressure=5e6)
     consumer_1 = Node(2, 'pressure', pressure=2e6)
     consumer_2 = Node(3, 'pressure', pressure=2.2e6)
-    node =  Node(1)
+    node = Node(1)
 
     graph.add_node(supplier)
     graph.add_node(consumer_1)

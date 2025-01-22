@@ -8,5 +8,3 @@ class Node:
         self.flow_rate_calculated = flow_rate if sign == 'flow' else 0.
         self.id = id
 
-    def __repr__(self):
-        return f"Node('{self.sign}')"

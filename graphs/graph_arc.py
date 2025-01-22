@@ -4,6 +4,7 @@ class Arc:
         self.end_node = end
         self.model = model
         self.id = model.id
+        self.flow_rate_calculated = 0
 
     def get_pressure_losses(self, flow_rate: float):
         return self.model.get_pressure_losses(flow_rate, self.start_node.pressure, self.end_node.pressure)

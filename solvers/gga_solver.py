@@ -64,3 +64,7 @@ class GGASolver:
         for node, flow_rate in zip(self.sorted_nodes[self.k:], q_vector):
             node.flow_rate_calculated = flow_rate
 
+    def __update_arc(self, x_vector: np.array):
+        for arc, flow_rate in zip(self.graph.arcs, x_vector):
+            arc.flow_rate_calculated = flow_rate
+

@@ -45,14 +45,19 @@ class GGASolver:
             # Опеределить ошибку
             mistake = np.abs(self.A.T @ self.P_vector - f_vector).max()
             step += 1
+        else:
+            if mistake < self.ACCURACY:
+                self.graph.is_normal_result = True
+            else:
+                print("Error")
 
     def __get_f_vector(self, x_vector: np.array) -> np.array:
-        return np.array([arc.model.get_pressure_losses(flow_rate) for arc, flow_rate in zip(self.graph.arcs, x_vector)])
+        return np.array([arc.get_pressure_losses(flow_rate) for arc, flow_rate in zip(self.graph.arcs, x_vector)])
 
     def __get_f_diff_inv(self, x_vector: np.array) -> np.array:
         f_diff_inv = np.zeros((self.n, self.n))
         for i in range(self.n):
-            f_diff_inv[i, i] = 1 / self.graph.arcs[i].model.get_pressure_derivatives(x_vector[i])
+            f_diff_inv[i, i] = 1 / self.graph.arcs[i].get_pressure_derivatives(x_vector[i])
         return f_diff_inv
 
     def __update_node(self, p_vector: np.array, q_vector: np.array):

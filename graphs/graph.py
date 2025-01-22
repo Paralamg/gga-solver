@@ -7,6 +7,7 @@ class Graph:
     def __init__(self):
         self.nodes = []
         self.arcs = []
+        self.is_normal_result = False
 
     def add_node(self, node: Node):
         self.nodes.append(node)

@@ -1,6 +1,14 @@
 class Arc:
-    def __init__(self, start, end, model, id):
-        self.start = start
-        self.end = end
+    def __init__(self, start, end, model):
+        self.start_node = start
+        self.end_node = end
         self.model = model
-        self.id = id
+        self.id = model.id
+        self.flow_rate_calculated = 0
+
+    def get_pressure_losses(self, flow_rate: float):
+        return self.model.get_pressure_losses(flow_rate, self.start_node.pressure, self.end_node.pressure)
+
+    def get_pressure_derivatives(self, flow_rate: float):
+        return self.model.get_pressure_derivatives(flow_rate, self.start_node.pressure, self.end_node.pressure)
+

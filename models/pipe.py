@@ -18,11 +18,13 @@ class Pipe:
         self.p_pr = self.p_sto / self.p_crit
         self.lamb = 0.067 * (2 * self.k / self.d) ** 0.2
 
-    def get_pressure_losses(self, flow_rate: float):
+    def get_pressure_losses(self, flow_rate: float, inlet_pressure: float, outlet_pressure: float):
+        self.set_pressure(inlet_pressure, outlet_pressure)
         idem = self.get_idem()
         return idem * flow_rate * abs(flow_rate)
 
-    def get_pressure_derivatives(self, flow_rate: float):
+    def get_pressure_derivatives(self, flow_rate: float, inlet_pressure: float, outlet_pressure: float):
+        self.set_pressure(inlet_pressure, outlet_pressure)
         idem = self.get_idem()
         return 2 * idem * abs(flow_rate)
 
@@ -33,13 +35,13 @@ class Pipe:
         '''
         return 16 * self.lamb * self.get_z_sto() * self.gas_const * self.t * self.l / (math.pi ** 2 * self.d ** 5)
 
-    def set_pressure(self, h_pressure: float, l_pressure: float):
+    def set_pressure(self, inlet_pressure: float, outlet_pressure: float):
         '''
         Находит среднее значение давления на учатске трубопровода по формуле приведённой в СТО Газпром 202-3.5-051-2006
         h_pressure - давление на входе
         l_pressure - давление на выходе
         '''
-        self.p_sto = 2 / 3 * (h_pressure + l_pressure ** 2 / (h_pressure + l_pressure))
+        self.p_sto = 2 / 3 * (inlet_pressure + outlet_pressure ** 2 / (inlet_pressure + outlet_pressure))
         self.p_pr = self.p_sto / self.p_crit
 
     def get_z_sto(self):

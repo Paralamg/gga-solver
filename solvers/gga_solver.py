@@ -4,61 +4,63 @@ import numpy as np
 
 
 class GGASolver:
+
     def __init__(self):
-        pass
+        self.graph = None
+        self.ACCURACY = 1000
 
     def solve(self, graph: Graph):
         self.graph = graph
-        self.initialize()
-        self.main_loop()
-        
-        
-    def initialize(self):
+        self.__initialize()
+        self.__main_loop()
+
+    def __initialize(self):
         self.m = self.graph.get_m()
         self.n = self.graph.get_n()
         self.k = self.graph.get_k()
         self.A = self.graph.get_incidence_matrix()
-        self.A1 = self.A[:self.k] # Взять первые k строк матрицы A
+        self.A1 = self.A[:self.k]
         self.A2 = self.A[self.k:]
         self.X_vector = np.random.rand(self.n)
-        sorted_nodes = self.graph.get_sorted_nodes()
-        self.P_vector = [node.pressure for node in sorted_nodes]
-        self.Q_vector = [node.flow_rate for node in sorted_nodes]
-        
+        self.sorted_nodes = self.graph.get_sorted_nodes()
+        self.P_vector = np.array([node.pressure for node in self.sorted_nodes])
+        self.Q_vector = np.array([node.flow_rate for node in self.sorted_nodes])
 
-    def main_loop(self):
+    def __main_loop(self):
         step = 0
         mistake = math.inf
         while mistake > self.ACCURACY and step < 100:
             # Найти F(x), F`(x) и матрицу Максвела в соответсвии с формулами 
-            F_vector = self.get_F_vector(self.X_vector)
-            F_diff_inv = self.get_F_diff_inv(self.X_vector)
-            maxvel = self.A1 @ F_diff_inv @ self.A1.T # (m-k)x(m-k)
-            
-            # Сделать шаг итераци в соответсвии с выведенными формулами. Получить вектор давлений и расходов по ребрам
-            self.P_vector[:self.k] = np.linalg.inv(maxvel) @ (self.Q_vector[:self.k] - self.A1 @ self.X_vector - 
-                                                              self.A1 @ F_diff_inv @ (self.A2.T @ self.P_vector[self.k:] - F_vector))
-            self.X_vector = self.X_vector + F_diff_inv @ (self.A.T @ self.P_vector - F_vector)
+            f_vector = self.__get_f_vector(self.X_vector)
+            f_diff_inv = self.__get_f_diff_inv(self.X_vector)
+            maxwell = self.A1 @ f_diff_inv @ self.A1.T  # (m-k)x(m-k)
 
-            # Обновить диагональную матрицу расходов и матрицу коэффициентов idem, перед которой обновим давления на гранях
-            for i in range(self.n):
-                # Обновление давления в соответсвии с номером узла, который соответсвует индексу data_node
-                self.graph.model[i].set_pressure(P_vector[data_node.index == pipeline[i].input_node] ** 0.5, 
-                                        P_vector[data_node.index == pipeline[i].output_node] ** 0.5) 
-                idem_diaganal[i, i] = pipeline[i].get_idem()
+            # Сделать шаг итераци в соответсвии с выведенными формулами. Получить вектор давлений и расходов по ребрам
+            self.P_vector[:self.k] = (np.linalg.inv(maxwell) @
+                                      (self.Q_vector[:self.k] - self.A1 @ self.X_vector - self.A1 @ f_diff_inv @
+                                       (self.A2.T @ self.P_vector[self.k:] - f_vector)))
+            self.X_vector = self.X_vector + f_diff_inv @ (self.A.T @ self.P_vector - f_vector)
+            self.Q_vector[self.k:] = self.A2 @ self.X_vector
 
             # Опеределить ошибку
-            mistake = np.abs(A.T @ P_vector - F_vector).max()
-            step += 1   
-    
-    def get_F_vector(self, X_vector: np.array) -> np.array:
-        return np.array([arc.model.get_pressure_losses(flow_rate) for arc, flow_rate in zip(self.graph.arcs, X_vector)])
-    
-    def get_F_diff_inv(self, X_vector: np.array) -> np.array:
-        F_diff_inv = np.zeros((self.n, self.n))
+            mistake = np.abs(self.A.T @ self.P_vector - f_vector).max()
+            step += 1
+
+    def __get_f_vector(self, x_vector: np.array) -> np.array:
+        return np.array([arc.model.get_pressure_losses(flow_rate) for arc, flow_rate in zip(self.graph.arcs, x_vector)])
+
+    def __get_f_diff_inv(self, x_vector: np.array) -> np.array:
+        f_diff_inv = np.zeros((self.n, self.n))
         for i in range(self.n):
-            F_diff_inv[i,i] = 1 / self.graph.arcs[i].model.get_pressure_derivatives(X_vector[i])
-        return F_diff_inv
+            f_diff_inv[i, i] = 1 / self.graph.arcs[i].model.get_pressure_derivatives(x_vector[i])
+        return f_diff_inv
 
+    def __update_node(self, p_vector: np.array, q_vector: np.array):
+        p_vector = np.sqrt(p_vector[:self.k])
+        q_vector = q_vector[self.k:]
+        for node, pressure in zip(self.sorted_nodes[:self.k], p_vector):
+            node.pressure_calculated = pressure
 
-        
+        for node, flow_rate in zip(self.sorted_nodes[self.k:], q_vector):
+            node.flow_rate_calculated = flow_rate
+

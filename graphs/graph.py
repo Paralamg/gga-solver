@@ -21,6 +21,7 @@ class Graph:
         n = self.get_n()
         A = np.zeros((m, n))
         sorted_nodes = self.get_sorted_nodes()
+        sorted_nodes[0].pressure = 1
         for num, arc in enumerate(self.arcs):
             A[sorted_nodes.index(arc.start_node), num] = 1 
             A[sorted_nodes.index(arc.end_node), num] = -1

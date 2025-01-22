@@ -4,7 +4,7 @@ class Node:
         self.neighbors = []
         self.pressure = pressure
         self.flow_rate = flow_rate
-        self.pressure_calculated = pressure if sign == 'pressure' else 0.
+        self.pressure_calculated = pressure if sign == 'pressure' else 5e6
         self.flow_rate_calculated = flow_rate if sign == 'flow' else 0.
         self.id = id
 

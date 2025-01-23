@@ -8,3 +8,5 @@ class Node:
         self.flow_rate_calculated = flow_rate if sign == 'flow' else 0.
         self.id = id
 
+    def __str__(self):
+        return f'{self.id:3}\t{self.sign:8}\t{self.flow_rate_calculated:10.2f} m3/s\t{self.pressure_calculated / 1e6:10.4f} MPa'

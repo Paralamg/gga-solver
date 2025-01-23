@@ -16,8 +16,8 @@ def create_graph_with_three_pipes() -> Graph:
     graph.add_node(node)
     
     pipe_1 = Pipe(0, 40e3, 1.22, 0.003)
-    pipe_2 = Pipe(0, 40e3, 1.22, 0.003)
-    pipe_3 = Pipe(0, 40e3, 1.22, 0.003)
+    pipe_2 = Pipe(1, 40e3, 1.22, 0.003)
+    pipe_3 = Pipe(2, 40e3, 1.22, 0.003)
 
     graph.add_arc(supplier, node, pipe_1)
     graph.add_arc(consumer_1, node, pipe_2)

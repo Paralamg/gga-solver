@@ -32,7 +32,7 @@ class GgaSolver:
         self.A2 = self.A[self.k:]
         self.X_vector = np.random.rand(self.n)
         self.sorted_nodes = self.graph.get_sorted_nodes()
-        self.P_vector = np.array([node.pressure for node in self.sorted_nodes])
+        self.P_vector = np.array([node.pressure* node.pressure for node in self.sorted_nodes])
         self.Q_vector = np.array([node.flow_rate for node in self.sorted_nodes])
 
     def __main_loop(self):
@@ -65,10 +65,12 @@ class GgaSolver:
             mistake = np.abs(self.A.T @ self.P_vector - f_vector).max()
             step += 1
         else:
+            self.__update_arc(self.X_vector)
             if mistake < self.ACCURACY:
                 self.graph.is_normal_result = True
             else:
                 print("Error")
+        
 
     def __get_f_vector(self, x_vector: np.array) -> np.array:
         return np.array([arc.get_pressure_losses(flow_rate) for arc, flow_rate in zip(self.graph.arcs, x_vector)])

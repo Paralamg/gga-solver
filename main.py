@@ -3,7 +3,7 @@ from solvers.gga_solver import GgaSolver
 from graphs.graph import Graph
 
 def main():
-    graph = graph_factory.create_graph_with_three_pipes()
+    graph = graph_factory.create_graph_contest()
     solver = GgaSolver()
     solver.solve(graph)
     print_result(graph)
@@ -17,7 +17,7 @@ def print_result(graph: Graph):
         print(node)
     print()
     print(f'Arcs:')
-    print(f'{"Id":>3}\t{"Start":>3} -> {"End":<3}\t{"Flow_rate":>15}\t\t{"Inlet_pressure":>14} -> {"Outlet_pressure":>14}')
+    print(f'{"Id":>3}\t{"Start":>5} -> {"End":<3}\t{"Flow_rate":>15}\t\t{"Inlet_pressure":>14} -> {"Outlet_pressure":>14}')
     for arc in sorted(graph.arcs, key=lambda x: x.id):
         print(arc)
 

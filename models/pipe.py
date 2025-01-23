@@ -27,9 +27,7 @@ class Pipe:
         :param outlet_pressure: давление на выходе
         :return: значение функции F(x)
         """
-        self.set_pressure(inlet_pressure, outlet_pressure)
-        idem = self.get_idem()
-        return idem * flow_rate * abs(flow_rate)
+        pass
 
     def get_pressure_derivatives(self, flow_rate: float, inlet_pressure: float, outlet_pressure: float):
         """
@@ -40,9 +38,7 @@ class Pipe:
         :param outlet_pressure: давление на выходе
         :return:
         """
-        self.set_pressure(inlet_pressure, outlet_pressure)
-        idem = self.get_idem()
-        return 2 * idem * abs(flow_rate)
+        pass
 
 
     def get_idem(self):

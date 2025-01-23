@@ -3,7 +3,7 @@ from solvers.gga_solver import GgaSolver
 from graphs.graph import Graph
 
 def main():
-    graph = graph_factory.create_graph_contest()
+    graph = graph_factory.create_graph_with_three_pipes()
     solver = GgaSolver()
     solver.solve(graph)
     print_result(graph)

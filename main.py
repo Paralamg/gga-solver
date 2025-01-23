@@ -17,7 +17,7 @@ def print_result(graph: Graph):
         print(node)
     print()
     print(f'Arcs:')
-    print(f'{"Id":>3}\t{"Start":>3} -> {"End":<3}\t{"Flow_rate":>15}\t{"Inlet_pressure":>14} -> {"Outlet_pressure":>14}')
+    print(f'{"Id":>3}\t{"Start":>3} -> {"End":<3}\t{"Flow_rate":>15}\t\t{"Inlet_pressure":>14} -> {"Outlet_pressure":>14}')
     for arc in sorted(graph.arcs, key=lambda x: x.id):
         print(arc)
 

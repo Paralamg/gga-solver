@@ -7,7 +7,7 @@ class Arc:
         self.flow_rate_calculated = 0
 
     def __str__(self):
-        return f'{self.id:3}\t{self.start_node.id:>3} -> {self.end_node.id:<3}\t{self.flow_rate_calculated:10.2f} m3/s\t{self.start_node.pressure_calculated / 1e6:10.4f} MPa -> {self.end_node.pressure_calculated / 1e6:10.4f} MPa'
+        return f'{self.id:3}\t{self.start_node.id:>3} -> {self.end_node.id:<3}\t{self.flow_rate_calculated:10.2f} m3/s\t\t{self.start_node.pressure_calculated / 1e6:10.4f} MPa -> {self.end_node.pressure_calculated / 1e6:10.4f} MPa'
 
     def get_pressure_losses(self, flow_rate: float):
         """

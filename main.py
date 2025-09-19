@@ -1,6 +1,6 @@
-import factories.graph_factory as graph_factory
-from solvers.gga_solver import GgaSolver
-from graphs.graph import Graph
+import src.factories.graph_factory as graph_factory
+from src.solvers.gga_solver import GgaSolver
+from src.graphs.graph import Graph
 
 def main():
     graph = graph_factory.create_graph_contest()

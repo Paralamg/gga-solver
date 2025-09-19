@@ -1,6 +1,6 @@
-from graphs.graph import Graph
-from models.pipe import Pipe
-from graphs.graph_node import Node
+from src.graphs.graph import Graph
+from src.models.pipe import Pipe
+from src.graphs.graph_node import Node
 
 def create_graph_with_three_pipes() -> Graph:
     graph = Graph()

@@ -1,6 +1,7 @@
 import math
-from graphs.graph import Graph
 import numpy as np
+
+from src.graphs.graph import Graph
 
 class GgaSolver:
 

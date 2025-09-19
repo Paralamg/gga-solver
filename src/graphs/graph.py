@@ -1,6 +1,6 @@
 import numpy as np
-from graphs.graph_node import Node
-from graphs.graph_arc import Arc
+from src.graphs.graph_node import Node
+from src.graphs.graph_arc import Arc
 
 
 class Graph:
